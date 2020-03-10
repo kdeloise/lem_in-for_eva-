@@ -75,6 +75,7 @@ typedef	struct			s_path
 
 void				ft_exit(const char *const str);
 
+void				ft_quick_sort_coor(t_room **array, int start, int end);
 void				ft_quick_sort(t_room **array, int start, int end);
 void				create_array_of_rooms_ptr(t_flags *flag, t_graph *graph);
 
@@ -83,6 +84,8 @@ void				create_links(t_graph *graph, char *name_coor);
 
 void				create_links_binary(t_graph *graph, char *name_coor, t_flags *flags);
 
+void				check_double_name(t_room **array_of_rooms_ptr, int count);
+void				check_double_coor(t_room **array_of_rooms_ptr, int count);
 void				check_double_room_coor(t_graph *graph, char *name_coor);
 void				create_rooms(t_graph *graph, char *name_coor);
 void				create_start_room(t_graph *graph, char *name_coor);

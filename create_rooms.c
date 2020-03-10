@@ -32,6 +32,55 @@
 //	return (1);
 //}
 
+int		ft_partition_coor(t_room **array, int start, int end)
+{
+	t_room *pivot;
+	int i;
+	t_room *temp;
+	int j;
+
+	pivot = array[end];
+	i = start - 1;
+	j = start;
+	while (j < end)
+	{
+		if (array[j]->x < pivot->x)
+		{
+			i++;
+			temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		else if (array[j]->x == pivot->x)
+		{
+			if (array[j]->y <= pivot->y)
+			{
+				i++;
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
+		}
+		j++;
+	}
+	temp = array[i + 1];
+	array[i + 1] = array[end];
+	array[end] = temp;
+	return (i + 1);
+}
+
+void	ft_quick_sort_coor(t_room **array, int start, int end)
+{
+	int q;
+
+	if (start < end)
+	{
+		q = ft_partition_coor(array, start, end);
+		ft_quick_sort_coor(array, start, q - 1);
+		ft_quick_sort_coor(array, q + 1, end);
+	}
+}
+
 int		ft_partition(t_room **array, int start, int end)
 {
 	t_room *pivot;
@@ -86,6 +135,33 @@ void	create_array_of_rooms_ptr(t_flags *fl, t_graph *graph)
 	}
 	fl->array_of_rooms_ptr[i] = NULL;
 	graph->rooms = start;
+}
+
+void	check_double_name(t_room **array_of_rooms_ptr, int count)
+{
+	int i;
+
+	i = -1;
+	while (++i < count - 1)
+	{
+		if (!(ft_strcmp(array_of_rooms_ptr[i]->name,array_of_rooms_ptr[i + 1]->name)))
+			ft_exit("Error <double name_room>");
+	}
+}
+
+void	check_double_coor(t_room **array_of_rooms_ptr, int count)
+{
+	int i;
+
+	i = -1;
+	while (++i < count - 1)
+	{
+		if (array_of_rooms_ptr[i]->x == array_of_rooms_ptr[i + 1]->x)
+		{
+			if (array_of_rooms_ptr[i]->y == array_of_rooms_ptr[i + 1]->y)
+				ft_exit("Error <double coordinate>");
+		}
+	}
 }
 
 void	check_double_room_coor(t_graph *graph, char *name_coor)
